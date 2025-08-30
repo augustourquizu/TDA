@@ -14,9 +14,7 @@ int contar(char l, string s){
 }
 
 
-int l_lindo(char l, string s){
-    int n = s.length();
-
+int l_lindo(char l, const string &s, int n){
     if(n==1){
         if(l==s[0]){
             return 0;
@@ -25,22 +23,26 @@ int l_lindo(char l, string s){
             return 1;
         }
     }
-    
+    int mitad=n/2;
     //Puntaje representa la cantidad de letras que hay que cambiar en el string para pasarlo a l-lindo.
     // Cuento las letras correctas en la mitad izquierda y le resto su largo para tener la cantidad 
     //de letras incorrectas, hago lo mismo con la mitad derecha.
-    int puntaje1= n/2 - contar(l, s.substr(0,n/2))+l_lindo(l+1,s.substr(n/2));
-    int puntaje2= n/2 - contar(l, s.substr(n/2)) +l_lindo(l+1,s.substr(0,n/2));
+    int puntaje1= mitad - contar(l, s.substr(0,mitad))+l_lindo(l+1,s.substr(mitad), mitad);
+    int puntaje2= mitad - contar(l, s.substr(mitad)) +l_lindo(l+1,s.substr(0,mitad), mitad);
 
     //Selecciono el puntaje con mas letras correctas y se lo resto a n
     return min(puntaje1,puntaje2) ;
 }
 
 int main(){
-    cout << "Obtenido:" << l_lindo('a', "aaaadcbb") << "| Esperado: 0\n" ;
-    cout << "Obtenido:" << l_lindo('a', "bbaaceaa") << ". Esperado: 4\n" ;
-    cout << "Obtenido:" << l_lindo('a', "jkghasdf") << ". Esperado: 7\n" ;
-    cout << "Obtenido:" << l_lindo('a', "x") << ". Esperado: 1\n" ;
-    cout << "Obtenido:" << l_lindo('a', "ccddaabb") << ". Esperado: 5\n" ;
+    int t;
+    cin >> t;
+    while(t>0){
+        int n;
+        string s;
+        cin >> n >> s;
+        cout << l_lindo('a', s, n) << "\n";
+        t--;
+    }
     return 0;
 }
