@@ -14,7 +14,7 @@ int contar(char l, string s){
 }
 
 
-int l_lindo(char l, const string &s, int n){
+int l_lindo(char l,  const string &s, int n){
     if(n==1){
         if(l==s[0]){
             return 0;
