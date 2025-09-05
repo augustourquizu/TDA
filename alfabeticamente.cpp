@@ -31,7 +31,7 @@ long long alfebaticamente(const vector<string>& lista, const vector<long long> &
                 // Me quedo con el mas chico
                 dpActual[0] =min(dp[0],dp[1]);
 
-            //Si actual<=siguiente, dp[0] se mantiene igual (dp[0] puede ser -1)
+            else if(actual<=siguiente && dp[0] != -1) dpActual[0]=dp[0];
             else if (actual <=siguienteRev && dp[1] != -1) dpActual[0]=dp[1];
         }
 
