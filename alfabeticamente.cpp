@@ -1,8 +1,6 @@
 #include <iostream>
 #include <algorithm>
 #include <vector>
-#include <tuple>
-#include <unordered_map>
 using namespace std;
 
 
@@ -27,7 +25,7 @@ long long alfebaticamente(const vector<string>& lista, const vector<long long> &
         //Guardo lo que despues va a ser los valores de la tabla
         long long dpActual[2]={-1,-1};
 
-        //Actualizo el coste actual
+        //Actualizo el coste actual (<= compara alfabeticamente)
         if(actual<=siguiente || actual<=siguienteRev){
             if (actual<=siguiente && dp[0] != -1 && actual <=siguienteRev && dp[1] != -1)
                 // Me quedo con el mas chico
@@ -37,6 +35,7 @@ long long alfebaticamente(const vector<string>& lista, const vector<long long> &
             else if (actual <=siguienteRev && dp[1] != -1) dpActual[0]=dp[1];
         }
 
+        //Actualizo el coste previo
         if(actualRev<=siguiente || actualRev<=siguienteRev){
             if (actualRev<=siguiente && dp[0] != -1 && actualRev <=siguienteRev && dp[1] != -1)
                 // Me quedo con el mas chico y sumo el coste
