@@ -4,7 +4,7 @@ using namespace std;
 
 int borrar(const string &s, int n, vector<vector<int>> &dp){
     //Si el substring es de largo 1, necesito solo una eliminacion
-    for(int i; i<n; i++) dp[i][i]=1;
+    for(int i=0; i<n; i++) dp[i][i]=1;
     //Lleno una tabla que posea las eliminaciones necesarias para cada substring con longitud l
     for(int l=2; l<=n; l++){
     int i=0;
