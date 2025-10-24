@@ -92,7 +92,7 @@ int main(){
     vector<int> alegria(k+1);
     //Tengo en cuenta alegria base
     alegria[0]=0;
-    llenar_vector(alegria,1);
+    llenar_vector(alegria,1); 
     
     cout << alegria_total(k, cartas, favoritos, alegria, n);   
 }
