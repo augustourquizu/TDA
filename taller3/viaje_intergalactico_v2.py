@@ -1,6 +1,6 @@
 import heapq
-from collections import defaultdict
-
+import sys
+input=sys.stdin.readline
 
 def hacer_grafo():    
     n,m=map(int, input().split())
@@ -10,50 +10,43 @@ def hacer_grafo():
         a, b, c = map(int, input().split())
         ady[a-1].append((b-1, c))
         ady[b-1].append((a-1, c))
+        
     for _ in range(n):
-        #Tiempos de demora
-        tiempos=[list(map(int, input().split()[1:])),True]
-            
         #Me molesta que diga la cantidad de momentos de demora
-        demora.append(tiempos)
+        tiempos=list(map(int, input().split()[1:]))
+        #No me pasa el tiempo asi que aprovecho que tengo memoria de sobra
+        demora_dict={}
+        
+        if tiempos:
+            demora_dict[tiempos[-1]] = 1
+            for i in range(len(tiempos) - 2, -1, -1):
+                if tiempos[i+1] == tiempos[i] + 1:
+                    demora_dict[tiempos[i]] = demora_dict[tiempos[i+1]] + 1
+                else:
+                    demora_dict[tiempos[i]] = 1
+            
+        demora.append(demora_dict)
     return demora, ady, n
 
 
 def dijkstra(demora,ady, n):
     #res es una lista de tiempos minimos para llegar a un planeta desde el punto de partida
     res=[float("inf")]*n
-    #heap de la forma (peso_camino, nodo)
-    res[0]=0
+    res[0]=0#heap de la forma (peso_camino, nodo)
     h=[(0,0)]
     
     while h:
         tiempo, nodo=heapq.heappop(h)
         #En el heap pueden aparecer distintos caminos a un nodo y me aseguro de tomar el mas corto
         if tiempo==res[nodo]:
-            #Calculo las demoras en cada momento de tiempo solo una vez (no calculo sobre nodos por lo
-            # que no paso)
-            if demora[nodo][1]:
-                tiempos=demora[nodo][0]
-                demora_dict=defaultdict(int)             
-                if tiempos:
-                    demora_dict[tiempos[-1]] = 1
-                    for i in range(len(tiempos) - 2, -1, -1):
-                        if tiempos[i+1] == tiempos[i] + 1:
-                            demora_dict[tiempos[i]] = demora_dict[tiempos[i+1]] + 1
-                        else:
-                            demora_dict[tiempos[i]] = 1
-                
-                #cambio el tipo de datos aprovechando que estoy sufriendo en python
-                demora[nodo][0]=demora_dict
-                demora[nodo][1]=False
-                
             #m es la arista que es una tupla de la forma (hasta, peso)
             for m in ady[nodo]:
                 v,p=m
                 #Tomo el tiempo con la demora
-                                
-                tiempo_demora=demora[nodo][0][tiempo]+tiempo
-                    
+                if tiempo in demora[nodo]:
+                    tiempo_demora=demora[nodo][tiempo]+tiempo
+                else: tiempo_demora=tiempo 
+                     
                 if tiempo_demora+p<res[v]:
                     res[v]=tiempo_demora+p
                     heapq.heappush(h,(tiempo_demora+p,v))
