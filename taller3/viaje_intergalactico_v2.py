@@ -55,5 +55,6 @@ def dijkstra(demora,ady, n):
     else: return -1
     
         
-demora,ady, n=hacer_grafo()
-print(dijkstra(demora,ady,n))
+prueba={(2,3):3,(3,4):7}
+prueba.pop((3,4))
+print(prueba)

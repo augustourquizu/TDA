@@ -1,3 +1,5 @@
+import heapq
+from collections import defaultdict, deque
 def hacer_grafo():    
     n,m=map(int, input().split())
     demora=[]
@@ -38,5 +40,10 @@ def ford(demora,ady, n):
     if res[n-1]!=float('inf'): return res[n-1]
     else: return -1
         
-demora,ady, n=hacer_grafo()
-print(ford(demora,ady,n))
+
+prueba=deque([1,2,3])
+while prueba:
+    p=prueba.popleft()
+    if p==2:
+        prueba.appendleft(4)
+    print(p)
